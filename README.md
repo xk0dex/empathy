@@ -234,7 +234,7 @@ En la carpeta `presentation/` encontrarás material completo para presentar Empa
 </div>
 
 - 🐛 **Issues**: [GitHub Issues](https://github.com/xk0dex/empathy/issues)
-- 📧 **Email**: empathy@team.dev
+- 📧 **Email**: h4cksito@proton.me
 - 📖 **Docs**: [Documentación completa](docs/)
 - 👨‍💻 **Autor**: [xk0dex en GitHub](https://github.com/xk0dex)
 
