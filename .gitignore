@@ -1,0 +1,153 @@
+# Archivos de configuración sensibles y variables de entorno
+.env
+.env.local
+.env.development
+.env.production
+.env.staging
+*.env
+config.ini
+secrets.yml
+secrets.yaml
+private.key
+*.pem
+*.p12
+*.pfx
+
+# Logs y archivos temporales
+*.log
+logs/
+temp/
+tmp/
+cache/
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Environment variables
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+empathy_env/
+
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.vs/
+.sublime-*
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Base de datos y datos sensibles
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+data/
+backups/
+
+# Archivos específicos de Empathy
+empathy.db
+reports/
+exports/
+user_data/
+cached_analysis/
+analysis_cache/
+
+# Archivos de configuración que pueden contener tokens
+config/.env
+config/local.yml
+config/production.yml
+
+# Archivos temporales y de desarrollo
+*.tmp
+*.temp
+.pytest_cache/
+test_results/
+coverage/
+
+# Dependencias de Node.js (si se agregan en el futuro)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de respaldo
+*.bak
+*.backup
+*.old
+
+# Archivos compilados y binarios
+*.exe
+*.dll
+*.dylib
+
+# Archivos de documentación generados
+docs/_build/
+site/
+
+# Archivos de deployment
+.terraform/
+*.tfstate
+*.tfvars
+docker-compose.override.yml
