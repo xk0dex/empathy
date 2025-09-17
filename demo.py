@@ -18,7 +18,7 @@ sys.path.append(str(Path(__file__).parent / 'src'))
 
 from main import EmpathyAnalyzer
 from data_collection.github_collector import CommitData, PullRequestData
-from __version__ import get_version_info, print_version_info, __version__
+from __version__ import get_version_info, print_version_info, __version__, print_banner, CREATOR, __github__
 
 
 def generate_demo_data():
@@ -181,6 +181,8 @@ class DemoAnalyzer(EmpathyAnalyzer):
     
     def analyze_demo_data(self):
         """Ejecuta análisis con datos de demostración."""
+        # Mostrar banner con marca de agua
+        print(print_banner())
         print(f"🚀 Ejecutando demostración de Proyecto Empathy v{__version__}...")
         print("=" * 60)
         
@@ -252,6 +254,10 @@ class DemoAnalyzer(EmpathyAnalyzer):
         
         print(f"\n🌐 Para ver el dashboard interactivo, ejecuta:")
         print(f"   python demo.py --web")
+        print()
+        print("✅ Demostración completada exitosamente")
+        print(f"📧 Creado por: {CREATOR} | 🔗 {__github__}")
+        print("⭐ Si te gusta, danos una estrella en GitHub!")
 
 
 def main():

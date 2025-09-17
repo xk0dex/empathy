@@ -1,9 +1,17 @@
 # 🤝 Empathy - Team Health Analyzer
 
+<div align="center">
+
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/xk0dex/empathy/releases)
 [![Python](https://img.shields.io/badge/python-3.8+-green.svg)](https://python.org)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 [![Security](https://img.shields.io/badge/security-audited-brightgreen.svg)](#security)
+
+**Creado por [xk0dex](https://github.com/xk0dex)** 🚀
+
+[![GitHub](https://img.shields.io/badge/Creator-xk0dex-blue?style=social&logo=github)](https://github.com/xk0dex)
+
+</div>
 
 > **El smartwatch para la salud de tu equipo de desarrollo**
 
@@ -215,11 +223,20 @@ En la carpeta `presentation/` encontrarás material completo para presentar Empa
 - **ONE_PAGER.md** - Resumen ejecutivo
 - **ESTRATEGIAS_PRESENTACION.md** - 5 enfoques diferentes
 
-## 📞 Soporte
+## 📞 Soporte & Contacto
+
+<div align="center">
+
+**Creador: xk0dex** 👨‍💻
+
+[![GitHub](https://img.shields.io/badge/GitHub-xk0dex-blue?style=for-the-badge&logo=github)](https://github.com/xk0dex)
+
+</div>
 
 - 🐛 **Issues**: [GitHub Issues](https://github.com/xk0dex/empathy/issues)
 - 📧 **Email**: empathy@team.dev
 - 📖 **Docs**: [Documentación completa](docs/)
+- 👨‍💻 **Autor**: [xk0dex en GitHub](https://github.com/xk0dex)
 
 ## 🏆 Reconocimientos
 
@@ -237,5 +254,9 @@ Empathy utiliza las siguientes tecnologías:
 **¿Te gusta Empathy? ¡Dale una ⭐ y compártelo!**
 
 [Reportar Bug](https://github.com/xk0dex/empathy/issues) • [Solicitar Feature](https://github.com/xk0dex/empathy/issues) • [Contribuir](CONTRIBUTING.md)
+
+---
+
+<sub>💻 Desarrollado con ❤️ por [**xk0dex**](https://github.com/xk0dex) | © 2024 Empathy Project</sub>
 
 </div>

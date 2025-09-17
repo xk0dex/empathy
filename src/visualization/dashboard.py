@@ -64,7 +64,14 @@ class Dashboard:
         @self.app.route('/api/health')
         def health_check():
             """Health check del dashboard."""
-            return jsonify({'status': 'healthy', 'version': '1.0.0'})
+            from ..__version__ import CREATOR, __github__, __version__
+            return jsonify({
+                'status': 'healthy', 
+                'version': __version__,
+                'created_by': CREATOR,
+                'github': __github__,
+                'repository': 'https://github.com/xk0dex/empathy'
+            })
         
         @self.app.route('/api/summary')
         def get_summary():
