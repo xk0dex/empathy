@@ -123,6 +123,14 @@ class SentimentAnalyzer:
         """
         logger.info("🧠 Iniciando análisis de sentimientos...")
         
+        # 🚨 ADVERTENCIA SOBRE LIMITACIONES NLP
+        logger.warning("⚠️  LIMITACIONES NLP: Los resultados pueden verse afectados por:")
+        logger.warning("   - Sarcasmo e ironía no detectados correctamente") 
+        logger.warning("   - Diferencias culturales en expresión")
+        logger.warning("   - Jerga técnica malinterpretada")
+        logger.warning("   - Contexto específico del equipo no considerado")
+        logger.warning("   📋 Usar como herramienta de apoyo, no decisión final")
+        
         results = {
             'commit_sentiments': self._analyze_commits(raw_data.get('commits', [])),
             'pr_sentiments': self._analyze_pull_requests(raw_data.get('pull_requests', [])),

@@ -29,6 +29,31 @@ Empathy es un sistema de análisis de dinámicas de equipo que proporciona insig
 - 📈 **Team Health Score** - Métrica integral de salud del equipo (0.0-1.0)
 - 🔄 **Integración con GitHub** - Conecta directamente con repositorios
 
+## ⚠️ Limitaciones Importantes
+
+> **📋 Por favor lee estas limitaciones antes de usar Empathy**
+
+### 🧠 Análisis de Sentimientos
+- **Sarcasmo e ironía** pueden ser malinterpretados por el NLP
+- **Diferencias culturales** en expresión pueden afectar precisión  
+- **Jerga técnica** podría generar falsos positivos/negativos
+- **Recomendación:** Usar como herramienta de apoyo, no decisión final
+
+### 🔐 Permisos de GitHub
+- Requiere permisos de **lectura completa** del repositorio
+- Acceso a **commits, PRs, y metadatos** del equipo
+- **Alternativa:** Próximamente modo "solo repositorios públicos"
+
+### 📊 Tamaño de Equipo
+- **Equipos <3 personas:** Métricas pueden no ser representativas
+- **Proyectos nuevos (<30 días):** Datos insuficientes para análisis
+- **Periodo mínimo recomendado:** 4+ semanas con 3+ contributores activos
+
+### 🤖 Recomendaciones Automáticas
+- Pueden ser **genéricas** sin contexto específico del equipo
+- **Calibración manual** necesaria para equipos únicos
+- Mejoras continuas basadas en feedback de usuarios
+
 ## 🚀 Demo Rápido
 
 ```bash

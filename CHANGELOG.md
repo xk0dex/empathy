@@ -5,6 +5,30 @@ Registro de cambios importantes del proyecto Empathy Analyzer.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere al [Versionado Semántico](https://semver.org/lang/es/).
 
+## [1.0.3] - 2025-09-17 "Transparency"
+
+### 🚨 Limitaciones y Advertencias Implementadas  
+- **TRANSPARENCIA:** Documentación completa de limitaciones en README
+- **VALIDACIONES:** Advertencias automáticas para equipos pequeños (<3 personas)
+- **NLP WARNINGS:** Alertas sobre limitaciones de análisis de sentimientos
+- **DATOS MÍNIMOS:** Validación de commits y PRs suficientes para análisis
+- **FEEDBACK INTEGRADO:** Respuesta directa a limitaciones identificadas por usuarios
+
+### 📋 Nuevas Validaciones
+- Equipo mínimo: 3+ contributores activos
+- Período mínimo: 30+ días de actividad  
+- Commits mínimos: 20+ para sentiment analysis
+- PRs mínimas: 5+ para collaboration analysis
+- Advertencias específicas sobre sarcasmo, ironía, diferencias culturales
+
+### 📝 Documentación Expandida
+- Sección "Limitaciones Importantes" en README
+- Análisis detallado de feedback (`LIMITATIONS_ANALYSIS.md`)
+- Roadmap de mejoras para v1.1-1.3
+- Transparencia sobre permisos de GitHub requeridos
+
+---
+
 ## [1.0.2] - 2025-01-14 "SecureForge"
 
 ### 🔒 Auditoría de Seguridad Completada

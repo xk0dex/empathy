@@ -54,28 +54,24 @@ class EmpathyAnalyzer:
             days_back: Número de días hacia atrás para analizar
             
         Returns:
-            dict: Resultados del análisis
+            Diccionario con resultados del análisis
         """
-        logger.info(f"🚀 Iniciando análisis de empathy para: {repo_url}")
+        logger.info(f"� Iniciando análisis de empathy para: {repo_url}")
         
-        # 1. Recopilación de datos
-        logger.info("📥 Recopilando datos de GitHub...")
-        raw_data = self.github_collector.collect_repository_data(repo_url, days_back)
+        # 1. Recopilar datos del repositorio
+        logger.info("� Recopilando datos del repositorio...")
+        repo_data = self.github_collector.collect_repository_data(repo_url, days_back)
         
-        if not raw_data:
-            logger.error("❌ No se pudieron recopilar datos del repositorio")
-            return None
-            
-        logger.info(f"✅ Datos recopilados: {len(raw_data.get('commits', []))} commits, "
-                   f"{len(raw_data.get('pull_requests', []))} PRs")
+        # 🚨 VALIDACIONES DE LIMITACIONES
+        self._validate_analysis_constraints(repo_data, days_back)
         
         # 2. Análisis de sentimientos
-        logger.info("🧠 Analizando sentimientos y comunicación...")
-        sentiment_results = self.sentiment_analyzer.analyze(raw_data)
+        logger.info("😊 Analizando sentimientos...")
+        sentiment_results = self.sentiment_analyzer.analyze_sentiment_patterns(repo_data)
         
         # 3. Análisis de colaboración
         logger.info("🤝 Analizando patrones de colaboración...")
-        collaboration_results = self.collaboration_analyzer.analyze(raw_data)
+        collaboration_results = self.collaboration_analyzer.analyze_collaboration_patterns(repo_data)
         
         # 4. Combinar resultados
         results = {
@@ -90,6 +86,56 @@ class EmpathyAnalyzer:
         logger.info("📊 Análisis completado exitosamente")
         return results
     
+    def _validate_analysis_constraints(self, repo_data: dict, days_back: int):
+        """
+        Valida limitaciones y muestra advertencias al usuario.
+        """
+        warnings = []
+        
+        # Validar número de contributores únicos
+        contributors = set()
+        for commit in repo_data.get('commits', []):
+            contributors.add(commit.get('author', 'unknown'))
+        
+        unique_contributors = len(contributors)
+        
+        if unique_contributors < 3:
+            warnings.append(
+                f"⚠️  EQUIPO PEQUEÑO: Solo {unique_contributors} contributors detectados. "
+                f"Recomendado mínimo 3+ para análisis estadísticamente válido."
+            )
+        
+        # Validar período de análisis
+        if days_back < 30:
+            warnings.append(
+                f"⚠️  PERÍODO CORTO: Analizando solo {days_back} días. "
+                f"Recomendado mínimo 30 días para patrones significativos."
+            )
+        
+        # Validar cantidad de datos
+        total_commits = len(repo_data.get('commits', []))
+        total_prs = len(repo_data.get('pull_requests', []))
+        
+        if total_commits < 20:
+            warnings.append(
+                f"⚠️  POCOS COMMITS: Solo {total_commits} commits encontrados. "
+                f"Recomendado 20+ para análisis de sentimientos confiable."
+            )
+        
+        if total_prs < 5:
+            warnings.append(
+                f"⚠️  POCAS PRs: Solo {total_prs} pull requests encontradas. "
+                f"Recomendado 5+ para análisis de colaboración."
+            )
+        
+        # Mostrar advertencias si existen
+        if warnings:
+            logger.warning("🚨 LIMITACIONES DETECTADAS:")
+            for warning in warnings:
+                logger.warning(f"   {warning}")
+            logger.warning("   📝 Estos resultados deben interpretarse con cautela.")
+            logger.warning("   🔗 Ver limitaciones completas: README.md sección 'Limitaciones'")
+
     def _generate_summary(self, sentiment_results: dict, collaboration_results: dict) -> dict:
         """
         Genera un resumen ejecutivo de los resultados del análisis.
