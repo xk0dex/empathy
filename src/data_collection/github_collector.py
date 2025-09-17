@@ -132,18 +132,31 @@ class GitHubCollector:
             
         Returns:
             Nombre en formato 'owner/repo'
+            
+        Raises:
+            ValueError: Si el formato de URL es inválido
         """
+        if not repo_url or not isinstance(repo_url, str):
+            raise ValueError("La URL del repositorio debe ser una cadena no vacía")
+        
+        repo_url = repo_url.strip()
+        
         # Limpiar URL y extraer owner/repo
         if 'github.com/' in repo_url:
-            parts = repo_url.split('github.com/')[-1].split('/')
-            if len(parts) >= 2:
-                return f"{parts[0]}/{parts[1]}"
+            parts = repo_url.split('github.com/')[-1].strip('/').split('/')
+            if len(parts) >= 2 and parts[0] and parts[1]:
+                # Remover .git si existe
+                repo_name = parts[1].replace('.git', '')
+                return f"{parts[0]}/{repo_name}"
         
         # Si ya está en formato owner/repo
         if '/' in repo_url and len(repo_url.split('/')) == 2:
-            return repo_url
+            owner, repo = repo_url.split('/')
+            if owner.strip() and repo.strip():
+                return f"{owner.strip()}/{repo.strip()}"
         
-        raise ValueError(f"Formato de URL de repositorio inválido: {repo_url}")
+        raise ValueError(f"Formato de URL de repositorio inválido: {repo_url}. "
+                        f"Use: 'owner/repo' o 'https://github.com/owner/repo'")
     
     def _get_repository_info(self, repo: Repository) -> Dict[str, Any]:
         """

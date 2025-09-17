@@ -42,8 +42,8 @@ try:
     nltk.download('vader_lexicon', quiet=True)
     nltk.download('punkt', quiet=True)
     print('✅ Recursos de NLTK descargados')
-except:
-    print('⚠️  Error descargando recursos de NLTK')
+except Exception as e:
+    print(f'⚠️  Error descargando recursos de NLTK: {e}')
 "
 
 # Copiar archivo de configuración de ejemplo

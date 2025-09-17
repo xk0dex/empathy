@@ -18,31 +18,42 @@ def load_config(config_path: str = None) -> Dict[str, Any]:
         
     Returns:
         Diccionario con la configuración completa
+        
+    Raises:
+        ValueError: Si la configuración es inválida
     """
     # Cargar variables de entorno
     env_path = Path(__file__).parent / '.env'
     if env_path.exists():
         load_dotenv(env_path)
     
+    # Validar token de GitHub
+    github_token = os.getenv('GITHUB_TOKEN')
+    if not github_token or github_token == 'ghp_tu_token_aqui':
+        raise ValueError(
+            "GITHUB_TOKEN no configurado. "
+            "Por favor configura tu token en config/.env"
+        )
+    
     config = {
         # Configuración de GitHub API
         'github': {
-            'token': os.getenv('GITHUB_TOKEN'),
+            'token': github_token,
             'api_url': os.getenv('GITHUB_API_URL', 'https://api.github.com'),
-            'rate_limit_delay': int(os.getenv('GITHUB_RATE_LIMIT_DELAY', '1')),
+            'rate_limit_delay': max(1, int(os.getenv('GITHUB_RATE_LIMIT_DELAY', '1'))),
         },
         
         # Configuración de análisis
         'analysis': {
             'sentiment_model': os.getenv('SENTIMENT_MODEL', 'vader'),
             'language': os.getenv('ANALYSIS_LANGUAGE', 'en'),
-            'confidence_threshold': float(os.getenv('CONFIDENCE_THRESHOLD', '0.5')),
+            'confidence_threshold': max(0.0, min(1.0, float(os.getenv('CONFIDENCE_THRESHOLD', '0.5')))),
         },
         
         # Configuración de base de datos
         'database': {
             'url': os.getenv('DATABASE_URL', 'sqlite:///empathy.db'),
-            'pool_size': int(os.getenv('DB_POOL_SIZE', '5')),
+            'pool_size': max(1, int(os.getenv('DB_POOL_SIZE', '5'))),
         },
         
         # Configuración de dashboard web

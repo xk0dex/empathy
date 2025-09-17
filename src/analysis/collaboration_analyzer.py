@@ -398,7 +398,8 @@ class CollaborationAnalyzer:
             try:
                 communities = nx.algorithms.community.greedy_modularity_communities(self.collaboration_graph)
                 clusters = [list(community) for community in communities if len(community) > 1]
-            except:
+            except Exception as e:
+                logger.warning(f"Error detectando clusters de colaboración: {e}")
                 clusters = []
         
         # Evaluar salud de la red

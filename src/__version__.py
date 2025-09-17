@@ -4,8 +4,8 @@ Creado por: xk0dex
 GitHub: https://github.com/xk0dex
 """
 
-__version__ = '1.0.0'
-__version_info__ = (1, 0, 0)
+__version__ = '1.0.1'
+__version_info__ = (1, 0, 1)
 __author__ = 'xk0dex'
 __author_email__ = 'xk0dex@github.com'
 __github__ = 'https://github.com/xk0dex'
@@ -14,11 +14,11 @@ __repository__ = 'https://github.com/xk0dex/empathy'
 # Información adicional de la versión
 VERSION_MAJOR = 1
 VERSION_MINOR = 0
-VERSION_PATCH = 0
+VERSION_PATCH = 1
 VERSION_STATUS = 'stable'  # stable, beta, alpha, rc
 
 # Nombre del release
-RELEASE_NAME = 'Genesis'  # Primer release estable
+RELEASE_NAME = 'Fortify'  # Security & Quality improvements
 
 # Fecha de release
 RELEASE_DATE = '2025-09-17'

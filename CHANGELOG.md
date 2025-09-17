@@ -5,6 +5,26 @@ Registro de cambios importantes del proyecto Empathy Analyzer.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere al [Versionado Semántico](https://semver.org/lang/es/).
 
+## [1.0.1] - 2025-09-17 "Fortify"
+
+### 🛡️ Seguridad
+- **Mejorado manejo de errores** eliminando catch genéricos por excepciones específicas
+- **Validación robusta de entrada** para URLs de repositorios GitHub
+- **Configuración validada** con verificación de tokens y parámetros
+- **Sanitización de entrada** en todos los puntos de acceso de datos
+
+### ✅ Calidad
+- **Tests básicos implementados** con cobertura de funcionalidad principal
+- **Arquitectura verificada** con importaciones y dependencias validadas
+- **Setup automatizado mejorado** con mejor manejo de errores en instalación
+- **Logging mejorado** con información más detallada para debugging
+
+### 🔧 Correcciones
+- **Eliminados catch genéricos** reemplazados por manejo específico de excepciones
+- **Corregida validación de URLs** para GitHub con casos edge manejados
+- **Mejorada instalación automática** con mejor reporte de errores
+- **Configuración robusta** con validación de tokens requeridos
+
 ## [1.0.0] - 2025-09-17 "Genesis"
 
 ### ✨ Añadido
