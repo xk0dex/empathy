@@ -29,7 +29,8 @@ def load_config(config_path: str = None) -> Dict[str, Any]:
     
     # Validar token de GitHub
     github_token = os.getenv('GITHUB_TOKEN')
-    if not github_token or github_token == 'ghp_tu_token_aqui':
+    placeholder_tokens = ['YOUR_GITHUB_TOKEN_HERE', 'ghp_example_token', 'REPLACE_WITH_TOKEN']
+    if not github_token or github_token in placeholder_tokens:
         raise ValueError(
             "GITHUB_TOKEN no configurado. "
             "Por favor configura tu token en config/.env"
