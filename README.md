@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)](https://github.com/xk0dex/empathy/releases)
+[![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](https://github.com/xk0dex/empathy/releases)
 [![Python](https://img.shields.io/badge/python-3.8+-green.svg)](https://python.org)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 [![Security](https://img.shields.io/badge/security-audited-brightgreen.svg)](#security)
@@ -13,11 +13,51 @@
 
 </div>
 
-> **El smartwatch para la salud de tu equipo de desarrollo**
+> **El smartwatch para la salud de tu equipo de desarrollo** 💓
 
-Empathy es un sistema de análisis de dinámicas de equipo que proporciona insights sobre la salud de la colaboración en equipos de desarrollo de software mediante NLP y análisis de datos.
+**Empathy analiza la salud de tu equipo de desarrollo en minutos**, detectando patrones de comunicación, silos de conocimiento y oportunidades de mejora usando NLP y análisis de datos de GitHub.
+
+## 🚀 **Quick Start** (2 minutos)
+
+```bash
+# 1. Clonar e instalar
+git clone https://github.com/xk0dex/empathy.git
+cd empathy
+pip install -r requirements.txt
+
+# 2. Demo inmediato (sin configuración)
+python3 demo.py
+
+# 3. Dashboard web interactivo
+python3 demo.py --web
+# → Abre http://localhost:8080
+```
+
+### 🎯 **¿Qué verás?**
+- **Team Health Score**: 0.87/1.0 (Excelente)
+- **Sentiment Analysis**: 78% positivo, 5% negativo
+- **Knowledge Distribution**: Detecta silos en equipo
+- **Collaboration Metrics**: Participación en reviews
+- **Actionable Recommendations**: Sugerencias específicas
 
 ![Empathy Demo](https://via.placeholder.com/800x400/2E8B57/FFFFFF?text=Empathy+Dashboard+Demo)
+
+## 💼 **Casos de Uso Reales**
+
+### 🏢 **Para Team Leads**
+- **Detectar burnout temprano** - Cambios en sentimiento antes de escaladas
+- **Identificar silos críticos** - ¿Quién tiene conocimiento único?
+- **Optimizar code reviews** - ¿Participan todos los miembros?
+
+### 👨‍💼 **Para Engineering Managers**
+- **Métricas objetivas de team health** para 1:1s y retrospectivas  
+- **Comparar equipos** - ¿Qué equipos necesitan atención?
+- **Impacto de cambios** - ¿Mejoraron las dinámicas después de acciones?
+
+### 🏃‍♂️ **Para Scrum Masters**
+- **Datos para retrospectivas** - Problemas comunicación detectados
+- **Health trends** - ¿Está mejorando la colaboración?
+- **Early warnings** - Tensiones detectadas antes que escalen
 
 ## 🌟 Características Principales
 
