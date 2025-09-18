@@ -4,8 +4,8 @@ Creado por: xk0dex
 GitHub: https://github.com/xk0dex
 """
 
-__version__ = '1.1.0'
-__version_info__ = (1, 1, 0)
+__version__ = '1.1.1'
+__version_info__ = (1, 1, 1)
 __author__ = 'xk0dex'
 __author_email__ = 'xk0dex@github.com'
 __github__ = 'https://github.com/xk0dex'
@@ -13,15 +13,15 @@ __repository__ = 'https://github.com/xk0dex/empathy'
 
 # Información adicional de la versión
 VERSION_MAJOR = 1
-VERSION_MINOR = 0
-VERSION_PATCH = 4
+VERSION_MINOR = 1
+VERSION_PATCH = 1
 VERSION_STATUS = 'stable'  # stable, beta, alpha, rc
 
 # Nombre del release
-RELEASE_NAME = 'Foundation'  # Madurez técnica y calidad empresarial
+RELEASE_NAME = 'Community Launch'  # Preparación para adopción comunitaria
 
 # Fecha de release
-RELEASE_DATE = '2025-09-17'
+RELEASE_DATE = '2025-09-18'
 
 # Autor y créditos
 CREATOR = 'xk0dex'
@@ -30,17 +30,37 @@ LICENSE = 'MIT License'
 
 # Características principales de esta versión
 FEATURES = [
-    'Análisis de sentimientos con VADER',
-    'Detección de silos de conocimiento',
-    'Dashboard web interactivo',
-    'Análisis de colaboración',
-    'Sistema de recomendaciones',
+    'Análisis de sentimientos con VADER y soporte español',
+    'Detección de silos de conocimiento avanzada',
+    'Dashboard web interactivo con tendencias históricas',
+    'Análisis de colaboración multicultural',
+    'Sistema de alertas configurable (Email/Slack/Webhook)',
+    'Benchmarks de rendimiento (25K commits)',
     'Demo interactivo completo',
-    'Material de presentación profesional'
+    'Material de presentación y marketing profesional',
+    'Roadmap público y sistema de colaboración',
+    'Documentación completa para adopción comunitaria'
 ]
 
 # Changelog resumido
 CHANGELOG = {
+    '1.1.1': {
+        'date': '2025-09-18',
+        'features': [
+            'Documentación completa de release formal',
+            'Ejemplos visuales concretos con ASCII dashboards',
+            'Demostración multicultural con equipos españoles',
+            'Roadmap público hasta 2026 con métricas claras',
+            'Sistema completo de colaboración comunitaria',
+            'Estrategia de marketing y visibilidad',
+            'Preparación para adopción comunitaria masiva'
+        ],
+        'fixes': [
+            'Consistencia en versionado across all files',
+            'Optimización de documentación para GitHub'
+        ],
+        'breaking_changes': []
+    },
     '1.0.0': {
         'date': '2025-09-17',
         'features': [

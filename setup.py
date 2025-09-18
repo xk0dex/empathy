@@ -20,7 +20,7 @@ def get_version():
                     version_part = line.split('=', 1)[1].strip()
                     # Remover comillas y espacios
                     return version_part.strip("'\"")
-    return '1.0.0'
+    return '1.1.1'
 
 # Leer README para descripción larga
 def get_long_description():

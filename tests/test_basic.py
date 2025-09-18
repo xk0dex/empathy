@@ -41,7 +41,7 @@ def test_version_info():
     """Prueba que la información de versión esté disponible."""
     from src.__version__ import __version__, CREATOR, __author__
     
-    assert __version__ == "1.0.0"
+    assert __version__ == "1.1.1"
     assert CREATOR == "xk0dex"
     assert __author__ == "xk0dex"
 
