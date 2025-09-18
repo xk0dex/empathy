@@ -4,8 +4,8 @@ Creado por: xk0dex
 GitHub: https://github.com/xk0dex
 """
 
-__version__ = '1.0.4'
-__version_info__ = (1, 0, 4)
+__version__ = '1.1.0'
+__version_info__ = (1, 1, 0)
 __author__ = 'xk0dex'
 __author_email__ = 'xk0dex@github.com'
 __github__ = 'https://github.com/xk0dex'

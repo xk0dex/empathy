@@ -340,8 +340,52 @@
                 </div>
             </div>
 
-            <!-- Gráficos -->
+            <!-- Tendencias Históricas -->
+            <div class="card" style="grid-column: 1 / -1;">
+                <h3>
+                    📊 Tendencias Históricas
+                    <span class="help-icon" data-tooltip="Visualiza la evolución de métricas del equipo a lo largo del tiempo. Permite detectar patrones, mejoras y deterioros antes de que se conviertan en problemas críticos.">?</span>
+                </h3>
+                <div style="margin-bottom: 20px;">
+                    <label for="trend-period" style="margin-right: 10px;">Período:</label>
+                    <select id="trend-period" onchange="updateTrendPeriod()" style="padding: 5px 10px; border-radius: 5px; border: 1px solid #ddd;">
+                        <option value="weekly">Últimas 12 semanas</option>
+                        <option value="monthly">Últimos 6 meses</option>
+                        <option value="quarterly">Últimos 4 trimestres</option>
+                    </select>
+                    <button onclick="exportTrends()" style="margin-left: 10px; padding: 5px 15px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">📁 Exportar CSV</button>
+                </div>
+                <div class="chart-container" style="height: 400px;">
+                    <canvas id="trendsChart"></canvas>
+                </div>
+                <div id="trend-insights" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <!-- Insights de tendencias se cargarán aquí -->
+                </div>
+            </div>
+
+            <!-- Comparación de Períodos -->
             <div class="dashboard-grid">
+                <div class="card">
+                    <h3>
+                        ⚖️ Comparación de Períodos
+                        <span class="help-icon" data-tooltip="Compara métricas entre dos períodos específicos para evaluar mejoras o deterioros. Útil para medir impacto de cambios organizacionales.">?</span>
+                    </h3>
+                    <div style="margin-bottom: 15px;">
+                        <label>Período 1:</label>
+                        <input type="date" id="period1-start" style="margin: 5px;">
+                        <input type="date" id="period1-end" style="margin: 5px;">
+                        <br>
+                        <label>Período 2:</label>
+                        <input type="date" id="period2-start" style="margin: 5px;">
+                        <input type="date" id="period2-end" style="margin: 5px;">
+                        <br>
+                        <button onclick="comparePeriods()" style="margin-top: 10px; padding: 8px 15px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">🔍 Comparar</button>
+                    </div>
+                    <div id="period-comparison" style="min-height: 200px;">
+                        <p style="text-align: center; color: #666; padding: 50px;">Selecciona dos períodos para comparar</p>
+                    </div>
+                </div>
+
                 <div class="card">
                     <h3>📈 Distribución de Sentimientos</h3>
                     <div class="chart-container">
@@ -380,6 +424,8 @@
     <script>
         let sentimentChart = null;
         let collaborationChart = null;
+        let trendsChart = null;
+        let currentTrendsData = null;
 
         async function loadData() {
             try {
@@ -582,8 +628,288 @@
             `;
         }
 
+        // Funciones para Tendencias Históricas
+        async function loadTrendData(period = 'weekly') {
+            try {
+                const response = await fetch(`/api/trends?period=${period}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    console.error('Error loading trends:', data.error);
+                    return;
+                }
+                
+                currentTrendsData = data;
+                updateTrendsChart(data);
+                updateTrendInsights(data);
+                
+            } catch (error) {
+                console.error('Error loading trend data:', error);
+            }
+        }
+
+        function updateTrendsChart(trendsData) {
+            const ctx = document.getElementById('trendsChart').getContext('2d');
+            
+            if (trendsChart) {
+                trendsChart.destroy();
+            }
+
+            // Preparar datos para el gráfico
+            const labels = trendsData.data_points.map(point => point.date);
+            const datasets = [
+                {
+                    label: 'Salud del Equipo',
+                    data: trendsData.data_points.map(point => point.team_health_score),
+                    borderColor: '#3498db',
+                    backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                    tension: 0.4,
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'Sentimiento',
+                    data: trendsData.data_points.map(point => point.sentiment_score),
+                    borderColor: '#27ae60',
+                    backgroundColor: 'rgba(39, 174, 96, 0.1)',
+                    tension: 0.4,
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'Colaboración',
+                    data: trendsData.data_points.map(point => point.collaboration_score),
+                    borderColor: '#e74c3c',
+                    backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                    tension: 0.4,
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'Commits',
+                    data: trendsData.data_points.map(point => point.commit_count),
+                    borderColor: '#f39c12',
+                    backgroundColor: 'rgba(243, 156, 18, 0.1)',
+                    tension: 0.4,
+                    yAxisID: 'y1'
+                }
+            ];
+
+            trendsChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: trendsData.period === 'weekly' ? 'Semanas' : 'Meses'
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Scores (0.0 - 1.0)'
+                            },
+                            min: 0,
+                            max: 1
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Número de Commits'
+                            },
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                afterBody: function(tooltipItems) {
+                                    const index = tooltipItems[0].dataIndex;
+                                    const point = trendsData.data_points[index];
+                                    return [
+                                        `Contribuidores: ${point.contributor_count}`,
+                                        `Tamaño promedio commit: ${point.avg_commit_size} líneas`
+                                    ];
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateTrendInsights(trendsData) {
+            const container = document.getElementById('trend-insights');
+            
+            if (!trendsData.insights || trendsData.insights.length === 0) {
+                container.innerHTML = '<p style="color: #666;">No hay suficientes datos para generar insights de tendencias.</p>';
+                return;
+            }
+
+            let html = '<h4>📋 Insights de Tendencias</h4><ul>';
+            trendsData.insights.forEach(insight => {
+                html += `<li>${insight}</li>`;
+            });
+            html += '</ul>';
+
+            // Agregar resumen de cambios
+            if (trendsData.trends) {
+                html += '<h4>📊 Cambios Clave</h4><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px;">';
+                
+                Object.entries(trendsData.trends).forEach(([metric, change]) => {
+                    if (Math.abs(change) > 1) { // Solo mostrar cambios significativos
+                        const direction = change > 0 ? '📈' : '📉';
+                        const color = change > 0 ? '#27ae60' : '#e74c3c';
+                        const metricNames = {
+                            'team_health_score': 'Salud General',
+                            'sentiment_score': 'Sentimiento',
+                            'collaboration_score': 'Colaboración',
+                            'activity_score': 'Actividad'
+                        };
+                        
+                        html += `<div style="padding: 8px; background: white; border-radius: 5px; border-left: 3px solid ${color};">
+                            <strong>${direction} ${metricNames[metric] || metric}</strong><br>
+                            <span style="color: ${color};">${change > 0 ? '+' : ''}${change.toFixed(1)}%</span>
+                        </div>`;
+                    }
+                });
+                html += '</div>';
+            }
+
+            container.innerHTML = html;
+        }
+
+        function updateTrendPeriod() {
+            const period = document.getElementById('trend-period').value;
+            loadTrendData(period);
+        }
+
+        async function comparePeriods() {
+            const period1Start = document.getElementById('period1-start').value;
+            const period1End = document.getElementById('period1-end').value;
+            const period2Start = document.getElementById('period2-start').value;
+            const period2End = document.getElementById('period2-end').value;
+
+            if (!period1Start || !period1End || !period2Start || !period2End) {
+                alert('Por favor selecciona todas las fechas para comparar');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/compare-periods', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        period1_start: period1Start,
+                        period1_end: period1End,
+                        period2_start: period2Start,
+                        period2_end: period2End
+                    })
+                });
+
+                const comparison = await response.json();
+                
+                if (comparison.error) {
+                    alert('Error en la comparación: ' + comparison.error);
+                    return;
+                }
+
+                displayPeriodComparison(comparison);
+                
+            } catch (error) {
+                console.error('Error comparing periods:', error);
+                alert('Error al comparar períodos');
+            }
+        }
+
+        function displayPeriodComparison(comparison) {
+            const container = document.getElementById('period-comparison');
+            
+            const metricNames = {
+                'team_health_score': 'Salud General',
+                'sentiment_score': 'Sentimiento',
+                'collaboration_score': 'Colaboración',
+                'activity_score': 'Actividad',
+                'commit_count': 'Número de Commits',
+                'contributor_count': 'Contribuidores'
+            };
+
+            let html = '<h4>📊 Comparación de Períodos</h4>';
+            html += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px;">';
+
+            Object.entries(comparison).forEach(([metric, change]) => {
+                const direction = change > 0 ? '📈' : change < 0 ? '📉' : '➡️';
+                let color = '#6c757d';
+                if (Math.abs(change) > 5) {
+                    color = change > 0 ? '#27ae60' : '#e74c3c';
+                } else if (Math.abs(change) > 2) {
+                    color = change > 0 ? '#28a745' : '#ffc107';
+                }
+
+                html += `<div style="padding: 15px; background: white; border-radius: 8px; border-left: 4px solid ${color}; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <div style="font-weight: bold; margin-bottom: 5px;">${direction} ${metricNames[metric] || metric}</div>
+                    <div style="font-size: 1.2em; color: ${color}; font-weight: bold;">
+                        ${change > 0 ? '+' : ''}${change.toFixed(1)}%
+                    </div>
+                </div>`;
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function exportTrends() {
+            if (!currentTrendsData) {
+                alert('No hay datos de tendencias para exportar');
+                return;
+            }
+
+            // Crear CSV
+            let csv = 'fecha,salud_equipo,sentimiento,colaboracion,actividad,commits,contribuidores,tamano_promedio_commit\n';
+            
+            currentTrendsData.data_points.forEach(point => {
+                csv += `${point.date},${point.team_health_score},${point.sentiment_score},${point.collaboration_score},${point.activity_score},${point.commit_count},${point.contributor_count},${point.avg_commit_size}\n`;
+            });
+
+            // Descargar archivo
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `tendencias_empathy_${currentTrendsData.period}_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
         // Cargar datos al inicializar
-        window.addEventListener('load', loadData);
+        window.addEventListener('load', function() {
+            loadData();
+            loadTrendData('weekly'); // Cargar tendencias por defecto
+        });
     </script>
 </body>
 </html>
