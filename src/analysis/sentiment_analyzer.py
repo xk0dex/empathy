@@ -175,6 +175,18 @@ class SentimentAnalyzer:
         logger.info("✅ Análisis de sentimientos completado")
         return results
     
+    def analyze_sentiment(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Método alias para analyze() para compatibilidad con la API.
+        
+        Args:
+            raw_data: Datos recopilados del repositorio
+            
+        Returns:
+            Resultados del análisis de sentimientos
+        """
+        return self.analyze(raw_data)
+    
     def _analyze_commits(self, commits: List[Any]) -> List[SentimentResult]:
         """Analiza el sentimiento en mensajes de commit."""
         commit_sentiments = []
