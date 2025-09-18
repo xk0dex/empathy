@@ -76,6 +76,55 @@
             gap: 10px;
         }
 
+        /* Tooltips para ayuda contextual */
+        .help-icon {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background: #6c757d;
+            border-radius: 50%;
+            color: white;
+            text-align: center;
+            font-size: 12px;
+            line-height: 18px;
+            cursor: help;
+            position: relative;
+        }
+
+        .help-icon:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1000;
+            max-width: 250px;
+            white-space: normal;
+            width: max-content;
+        }
+
+        .help-icon:hover::before {
+            content: '';
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #333;
+        }
+
+        /* Indicadores de salud por colores */
+        .health-excellent { color: #28a745; background: rgba(40, 167, 69, 0.1); }
+        .health-good { color: #17a2b8; background: rgba(23, 162, 184, 0.1); }
+        .health-fair { color: #ffc107; background: rgba(255, 193, 7, 0.1); }
+        .health-poor { color: #dc3545; background: rgba(220, 53, 69, 0.1); }
+
         .metric-large {
             font-size: 3em;
             font-weight: bold;
@@ -224,14 +273,20 @@
             <!-- Métricas principales -->
             <div class="dashboard-grid">
                 <div class="card">
-                    <h3>🌟 Salud General del Equipo</h3>
+                    <h3>
+                        🌟 Salud General del Equipo
+                        <span class="help-icon" data-tooltip="Métrica combinada (0.0-1.0) que incluye comunicación, colaboración y distribución de conocimiento. 0.8+ = Excelente, 0.6-0.8 = Bueno, 0.4-0.6 = Regular, <0.4 = Crítico">?</span>
+                    </h3>
                     <div id="overall-health" class="metric-large">
                         --
                     </div>
                 </div>
 
                 <div class="card">
-                    <h3>💬 Análisis de Comunicación</h3>
+                    <h3>
+                        💬 Análisis de Comunicación
+                        <span class="help-icon" data-tooltip="Evalúa el tono en commits, PRs y reviews. IMPORTANTE: NLP no detecta sarcasmo/ironía. Usar como indicador, no veredicto final.">?</span>
+                    </h3>
                     <div class="metric-small">
                         <span class="metric-label">Score General:</span>
                         <span id="communication-score" class="metric-value">--</span>
@@ -247,7 +302,10 @@
                 </div>
 
                 <div class="card">
-                    <h3>🤝 Análisis de Colaboración</h3>
+                    <h3>
+                        🤝 Análisis de Colaboración
+                        <span class="help-icon" data-tooltip="Mide interacción entre miembros: % PRs con reviews, diversidad de reviewers, respuesta y engagement. 0.8+ = Muy colaborativo, <0.5 = Silos evidentes">?</span>
+                    </h3>
                     <div class="metric-small">
                         <span class="metric-label">Score de Colaboración:</span>
                         <span id="collaboration-score" class="metric-value">--</span>
@@ -263,7 +321,10 @@
                 </div>
 
                 <div class="card">
-                    <h3>🧠 Distribución de Conocimiento</h3>
+                    <h3>
+                        🧠 Distribución de Conocimiento
+                        <span class="help-icon" data-tooltip="Detecta concentración vs distribución de expertise. 0.8+ = Muy distribuido, 0.4-0.6 = Algunos silos, <0.4 = Conocimiento muy concentrado (bus factor alto)">?</span>
+                    </h3>
                     <div class="metric-small">
                         <span class="metric-label">Score de Distribución:</span>
                         <span id="knowledge-score" class="metric-value">--</span>

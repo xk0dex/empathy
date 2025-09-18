@@ -71,7 +71,7 @@ class SentimentAnalyzer:
     def _setup_dev_patterns(self):
         """Configura patrones específicos para comunicación de desarrollo."""
         
-        # Palabras/frases que indican sentimientos positivos en desarrollo
+        # Palabras/frases que indican sentimientos positivos en desarrollo (INGLÉS)
         self.positive_dev_patterns = [
             r'good\s+(?:job|work|catch|point)',
             r'nice\s+(?:work|job|fix|solution)',
@@ -84,7 +84,19 @@ class SentimentAnalyzer:
             r'excellent\s+(?:work|job|solution)'
         ]
         
-        # Palabras/frases que indican sentimientos negativos en desarrollo
+        # Palabras/frases positivas en ESPAÑOL
+        self.positive_spanish_patterns = [
+            r'(?:muy\s+)?(?:buen|excelente)\s+(?:trabajo|trabajo)',
+            r'me\s+gusta\s+(?:esta|la)\s+solución',
+            r'(?:está|quedó)\s+(?:muy\s+)?(?:bien|genial|perfecto)',
+            r'gracias\s+por\s+(?:el|la|esto)',
+            r'(?:muy\s+)?buena\s+(?:idea|propuesta|solución)',
+            r'funciona\s+(?:muy\s+)?(?:bien|perfecto)',
+            r'código\s+(?:muy\s+)?(?:limpio|claro)',
+            r'(?:me\s+)?encanta\s+(?:este|esta|el|la)'
+        ]
+        
+        # Palabras/frases que indican sentimientos negativos en desarrollo (INGLÉS)
         self.negative_dev_patterns = [
             r'(?:this\s+is\s+)?(?:terrible|awful|horrible)',
             r'what\s+(?:the\s+hell|were\s+you\s+thinking)',
@@ -94,6 +106,18 @@ class SentimentAnalyzer:
             r'(?:stupid|dumb|ridiculous)\s+(?:mistake|error|approach)',
             r'(?:why\s+would\s+you|how\s+could\s+you)',
             r'(?:sloppy|messy)\s+code'
+        ]
+        
+        # Palabras/frases negativas en ESPAÑOL
+        self.negative_spanish_patterns = [
+            r'(?:está|esto)\s+(?:muy\s+)?(?:mal|terrible|horrible)',
+            r'no\s+(?:me\s+gusta\s+)?(?:funciona|sirve)',
+            r'(?:muy\s+)?(?:malo|feo|horrible)\s+(?:código|enfoque)',
+            r'(?:qué\s+)?(?:desastre|porquería)',
+            r'no\s+(?:tiene\s+)?sentido',
+            r'(?:está|es)\s+(?:roto|bugueado)',
+            r'(?:muy\s+)?(?:confuso|complicado|enredado)',
+            r'(?:pérdida\s+de\s+tiempo|inútil)'
         ]
         
         # Palabras que indican frustración técnica
@@ -331,16 +355,33 @@ class SentimentAnalyzer:
     def _get_dev_pattern_adjustment(self, text: str) -> float:
         """Ajusta el score basado en patrones específicos de desarrollo."""
         adjustment = 0.0
+        text_lower = text.lower()
         
-        # Buscar patrones positivos
+        # Buscar patrones positivos en INGLÉS
         positive_matches = sum(1 for pattern in self.positive_regex if pattern.search(text))
         if positive_matches > 0:
             adjustment += 0.2 * positive_matches
         
-        # Buscar patrones negativos
+        # Buscar patrones positivos en ESPAÑOL
+        spanish_positive_matches = 0
+        for pattern_str in self.positive_spanish_patterns:
+            if re.search(pattern_str, text_lower, re.IGNORECASE):
+                spanish_positive_matches += 1
+        if spanish_positive_matches > 0:
+            adjustment += 0.2 * spanish_positive_matches
+        
+        # Buscar patrones negativos en INGLÉS
         negative_matches = sum(1 for pattern in self.negative_regex if pattern.search(text))
         if negative_matches > 0:
             adjustment -= 0.3 * negative_matches
+        
+        # Buscar patrones negativos en ESPAÑOL
+        spanish_negative_matches = 0
+        for pattern_str in self.negative_spanish_patterns:
+            if re.search(pattern_str, text_lower, re.IGNORECASE):
+                spanish_negative_matches += 1
+        if spanish_negative_matches > 0:
+            adjustment -= 0.3 * spanish_negative_matches
         
         # Buscar patrones de frustración (menos severo que negativo)
         frustration_matches = sum(1 for pattern in self.frustration_regex if pattern.search(text))
